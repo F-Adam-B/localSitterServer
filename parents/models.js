@@ -10,6 +10,8 @@ const ParentalInfoSchema = mongoose.Schema({
 	startTime: { type: String, required: true },
 	endTime: { type: String, required: true },
 	additionalInfo: { type: String, required: false },
+	// sentMessages: [{ type: String, required: false }],
+	// receivedMessages: [{ type: String, required: false }],
 });
 
 ParentalInfoSchema.methods.apiRepr = function() {
@@ -23,6 +25,8 @@ ParentalInfoSchema.methods.apiRepr = function() {
 		startTime: this.startTime || '',
 		endTime: this.endTime || '',
 		additionalInfo: this.additionalInfo || '',
+		// sentMessages: this.sentMessages || '',
+		// receivedMessages: this.receivedMessages || '',
 	};
 };
 

@@ -9,14 +9,14 @@ const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require('./config');
 const { router: parentsRouter } = require('./parents');
 const { router: usersRouter } = require('./users');
 const { router: sittersRouter } = require('./sitters');
+const { router: messagesRouter } = require('./messages');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 const { ParentalInfo } = require('./parents/models');
 const { User } = require('./users/models');
+const { Message } = require('./messages/models');
 const passport = require('passport');
 const app = express();
 const cors = require('cors');
-
-app.use(bodyParser.json());
 
 app.use(
 	morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -33,10 +33,13 @@ app.use(
 	})
 );
 
+app.use(bodyParser.json());
+
 app.use('/api/parents/', parentsRouter);
 app.use('/api/users/', usersRouter);
 app.use('/api/sitters/', sittersRouter);
 app.use('/api/auth/', authRouter);
+app.use('/api/messages/', messagesRouter);
 
 function runServer(databaseUrl = DATABASE_URL, port = PORT) {
 	console.log(DATABASE_URL);

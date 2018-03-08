@@ -12,6 +12,8 @@ const SitterInfoSchema = mongoose.Schema({
 	dateAvailable: { type: Date, required: true },
 	hoursAvailable: { type: Number, required: false },
 	rate: { type: Number, required: true },
+	// sentMessages: [{ type: String, required: false }],
+	// receivedMessages: [{ type: String, required: false }],
 });
 
 SitterInfoSchema.methods.apiRepr = function() {
@@ -23,6 +25,8 @@ SitterInfoSchema.methods.apiRepr = function() {
 		yearsExperience: this.yearsExperience || '',
 		dateAvailable: this.dateAvailable || '',
 		hoursAvailable: this.hoursAvailable || '',
+		// sentMessages: this.sentMessages || '',
+		// receivedMessages: this.receivedMessages || '',
 	};
 };
 

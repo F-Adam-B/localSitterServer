@@ -4,23 +4,31 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const MessageSchema = mongoose.Schema({
-	userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-	// sitterID: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-	messageSubject: { type: String, required: true },
-	createdMessages: [{ type: String, required: true }],
-	receivedMessages: [{ type: String, required: false }],
-	dateTime: { type: Date, required: false, default: Date.now },
+	sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+	messages: {
+		subject: String,
+		message: String,
+		delivered: Boolean,
+		read: Boolean,
+		date: { type: Date, default: Date.now },
+	},
+	is_group_message: { type: Boolean, default: false },
+	recipient: {
+		recipientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		delivered: Boolean,
+		read: Boolean,
+		last_seen: { type: Date, default: Date.now },
+	},
 });
 
 MessageSchema.methods.apiRepr = function() {
 	return {
+		sender: this.sender || '',
 		messageID: this._id,
-		// sitterID: this.sitterID || '',
-		userID: this.parentID || '',
-		messageSubject: this.messageSubject || '',
-		createdMessages: this.createdMessages || '',
-		receivedMessages: this.receivedMessages || '',
-		dateTime: this.dateTime || '',
+		messages: this.messages || '',
+		is_group_message: this.is_group_message,
+		recipient: this.recipient || '',
+		// last_seen: this.last_seen,
 	};
 };
 

@@ -11,14 +11,13 @@ const jsonParser = bodyParser.json();
 // const passport = require('passport');
 
 router.post('/create_message', jsonParser, (req, res) => {
-	let { messageSubject, createdMessages } = req.body;
-	return Message.create({ messageSubject, createdMessages })
+	let { userId, messages, is_group_message, recipient } = req.body;
+
+	return Message.create({ sender: userId, messages, is_group_message, recipient })
 		.then(message => {
-			console.log('message: ', message);
 			return res.status(201).json(message.apiRepr());
 		})
 		.catch(err => {
-			console.log('err: ', err);
 			res.status(500).json({ message: 'Internal server err' });
 		});
 });

@@ -26,4 +26,11 @@ router.post('/create_message', jsonParser, (req, res) => {
 		});
 });
 
+router.get('/:id', (req, res) => {
+	return Message.find({ sender: req.params.id })
+		.populate('sender', { password: 0 })
+		.then(data => res.json(data))
+		.catch(err => res.status(500).json({ message: 'Internal Server Err' }));
+});
+
 module.exports = { router };

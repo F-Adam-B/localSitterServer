@@ -11,9 +11,13 @@ const jsonParser = bodyParser.json();
 // const passport = require('passport');
 
 router.post('/create_message', jsonParser, (req, res) => {
-	let { userId, messages, is_group_message, recipient } = req.body;
+	let { email, text, subject, id } = req.body;
 
-	return Message.create({ sender: userId, messages, is_group_message, recipient })
+	return Message.create({
+		sender: id,
+		recipient: { recipientEmail: email },
+		messages: { message: text, subject: subject },
+	})
 		.then(message => {
 			return res.status(201).json(message.apiRepr());
 		})

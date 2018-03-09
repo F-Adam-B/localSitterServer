@@ -14,7 +14,7 @@ const MessageSchema = mongoose.Schema({
 	},
 	is_group_message: { type: Boolean, default: false },
 	recipient: {
-		recipientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		recipientEmail: String,
 		delivered: Boolean,
 		read: Boolean,
 		last_seen: { type: Date, default: Date.now },
@@ -28,6 +28,7 @@ MessageSchema.methods.apiRepr = function() {
 		messages: this.messages || '',
 		is_group_message: this.is_group_message,
 		recipient: this.recipient || '',
+		recipientEmail: this.recipient.recipientEmail || '',
 		// last_seen: this.last_seen,
 	};
 };
